@@ -1,0 +1,6 @@
+@import "tailwindcss";
+
+a.active hr {
+  width: 50%;
+  transition: 0.2s linear;
+}
