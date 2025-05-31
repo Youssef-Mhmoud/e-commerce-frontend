@@ -1,14 +1,10 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { assets } from "../assets/frontend_assets/assets";
 import { useState } from "react";
 import NavbarLinks from "./NavbarLinks";
 
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
-
-  // const hideSidebar = () => {
-  //   setVisible(false)
-  // }
 
   return (
     <nav className="flex justify-between items-center font-medium py-5">
