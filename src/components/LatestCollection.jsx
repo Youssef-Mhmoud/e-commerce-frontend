@@ -1,17 +1,10 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "./Title";
-import { useState } from "react";
-import ProductItem from "./ProductItem";
 import Products from "./Products";
 
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
-  const [latestProducts, setLatestProducts] = useState([]);
-
-  useEffect(() => {
-    setLatestProducts(products.slice(0, 10));
-  }, [products]);
 
   return (
     <div className="my-10">
@@ -23,10 +16,12 @@ const LatestCollection = () => {
       />
 
       {/* Rendering Products */}
-      {latestProducts.length > 0 ? (
-        <Products products={latestProducts} />
+      {products.length > 0 ? (
+        <Products products={products.slice(0, 10)} />
       ) : (
-        <p className="text-center text-gray-500">No latest collection found.</p>
+        <p className="text-center text-gray-500">
+          Sorry, no products in the latest collection right now.
+        </p>
       )}
     </div>
   );
