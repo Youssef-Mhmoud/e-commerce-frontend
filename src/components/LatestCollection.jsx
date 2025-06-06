@@ -23,7 +23,11 @@ const LatestCollection = () => {
       />
 
       {/* Rendering Products */}
-      <Products products={latestProducts} />
+      {latestProducts.length > 0 ? (
+        <Products products={latestProducts} />
+      ) : (
+        <p className="text-center text-gray-500">No latest collection found.</p>
+      )}
     </div>
   );
 };

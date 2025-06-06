@@ -9,7 +9,9 @@ const BestSeller = () => {
   const [bestProducts, setBestProducts] = useState([]);
 
   useEffect(() => {
-    const filteredProducts = products.filter((product) => product.bestseller);
+    const filteredProducts = products.filter(
+      (product) => product.bestseller === true
+    );
 
     setBestProducts(filteredProducts.slice(0, 5));
   }, [products]);
@@ -23,7 +25,11 @@ const BestSeller = () => {
       />
 
       {/* Render Best Seller Products */}
-      <Products products={bestProducts} />
+      {bestProducts.length > 0 ? (
+        <Products products={bestProducts} />
+      ) : (
+        <p className="text-center text-gray-500">No best sellers found.</p>
+      )}
     </div>
   );
 };
