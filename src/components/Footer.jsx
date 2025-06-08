@@ -8,7 +8,11 @@ const Footer = () => {
     <footer>
       <div className="flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm">
         <div>
-          <img className="w-32 mb-5" src={assets.logo} alt="Forever company logo" />
+          <img
+            className="w-32 mb-5"
+            src={assets.logo}
+            alt="Forever company logo"
+          />
           <p className="text-gray-600 w-full sm:w-3/4 md:w-2/3">
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been the industry's standard dummy text
@@ -29,19 +33,33 @@ const Footer = () => {
                 About us
               </Link>
             </li>
-            <li className="cursor-pointer hover:text-black duration-200">
-              Delivery
+            <li className="hover:text-black duration-200">
+              <Link>Delivery</Link>
             </li>
-            <li className="cursor-pointer hover:text-black duration-200">
-              Privacy policy
+            <li className="hover:text-black duration-200">
+              <Link>Privacy policy</Link>
             </li>
           </ul>
         </div>
         <div>
           <p className="font-medium text-xl mb-5">GET IN TOUCH</p>
           <ul className="flex flex-col gap-1 text-gray-600">
-            <li>+1-000-000-0000</li>
-            <li>contact@foreveryou.com</li>
+            <li>
+              <a
+                href="tel:+1-000-000-0000"
+                className="hover:text-black duration-200"
+              >
+                +1-000-000-0000
+              </a>
+            </li>
+            <li>
+              <a
+                href="mail:contact@foreveryou.com"
+                className="hover:text-black duration-200"
+              >
+                contact@foreveryou.com
+              </a>
+            </li>
           </ul>
         </div>
       </div>
