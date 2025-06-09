@@ -1,6 +1,6 @@
 const Title = ({ titleText_1, titleText_2, paragraphText }) => {
   return (
-    <div className="text-center py-8 text-3xl">
+    <div className="py-8">
       <div className="inline-flex gap-2 items-center mb-3">
         <p className="text-gray-500">
           {titleText_1}{" "}

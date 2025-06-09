@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import Title from "../Title";
 import { ShopContext } from "../../context/ShopContext";
-import Products from "../Products";
+import Products from "../productComponents/Products";
 
 const BestSeller = () => {
   const { products } = useContext(ShopContext);
@@ -16,7 +16,7 @@ const BestSeller = () => {
   }, [products]);
 
   return (
-    <div className="my-10">
+    <div className="my-10 text-3xl text-center">
       <Title
         titleText_1="BEST"
         titleText_2="SELLERS"

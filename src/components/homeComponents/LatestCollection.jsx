@@ -1,13 +1,13 @@
 import { useContext } from "react";
 import { ShopContext } from "../../context/ShopContext";
 import Title from "../Title";
-import Products from "../Products";
+import Products from "../productComponents/Products";
 
 const LatestCollection = () => {
   const { products } = useContext(ShopContext);
 
   return (
-    <div className="my-10">
+    <div className="my-10 text-3xl text-center">
       <Title
         titleText_1="LATEST"
         titleText_2="COLLECTION"
