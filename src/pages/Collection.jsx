@@ -10,6 +10,7 @@ const Collection = () => {
   const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
+  const [sortType, setSortType] = useState("relevant");
 
   const { products } = useContext(ShopContext);
 
@@ -54,6 +55,23 @@ const Collection = () => {
     setFilterProducts(copyProducts);
   };
 
+  const sortProducts = () => {
+    let copyFilterProducts = filterProducts.slice();
+
+    switch (sortType) {
+      case "low-high":
+        setFilterProducts(copyFilterProducts.sort((a, b) => a.price - b.price));
+        break;
+      case "high-low":
+        setFilterProducts(copyFilterProducts.sort((a, b) => b.price - a.price));
+        break;
+
+      default:
+        applyFilterHandler();
+        break;
+    }
+  };
+
   const showFilterHandler = () => {
     setShowFilter((isShowing) => !isShowing);
   };
@@ -63,6 +81,10 @@ const Collection = () => {
     applyFilterHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [category, subCategory]);
+
+  useEffect(() => {
+    sortProducts();
+  }, [sortType]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t border-t-gray-200">
@@ -158,7 +180,11 @@ const Collection = () => {
         <div className="flex-1">
           <div className="flex items-center justify-between text-base sm:text-2xl mb-4">
             <Title titleText_1="ALL" titleText_2="COLLECTIONS" />
-            <select className="border-2 border-gray-300 text-sm p-2">
+            <select
+              className="border-2 border-gray-300 text-sm p-2"
+              onChange={(e) => setSortType(e.target.value)}
+              value={sortType}
+            >
               <option value="relevant">Sort by: Relevant</option>
               <option value="low-high">Sort by: Low to High</option>
               <option value="high-low">Sort by: High to Low</option>
