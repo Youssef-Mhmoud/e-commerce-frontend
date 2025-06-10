@@ -3,6 +3,7 @@ import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import Products from "../components/productComponents/Products";
 import { assets } from "../assets/frontend_assets/assets";
+import Categories from "../components/collectionComponents/Categories";
 
 const Collection = () => {
   // States
@@ -15,26 +16,6 @@ const Collection = () => {
   const { products } = useContext(ShopContext);
 
   // Handlers
-  const toggleCategoryHandler = (e) => {
-    if (category.includes(e.target.value))
-      setCategory((prevCat) =>
-        prevCat.filter((item) => item !== e.target.value)
-      );
-    else {
-      setCategory((prevCat) => [...prevCat, e.target.value]);
-    }
-  };
-
-  const toggleSubCategoryHandler = (e) => {
-    if (subCategory.includes(e.target.value))
-      setSubCategory((prevSubCat) =>
-        prevSubCat.filter((item) => item !== e.target.value)
-      );
-    else {
-      setSubCategory((prevSubCat) => [...prevSubCat, e.target.value]);
-    }
-  };
-
   const applyFilterHandler = () => {
     let copyProducts = products.slice();
 
@@ -84,6 +65,7 @@ const Collection = () => {
 
   useEffect(() => {
     sortProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [sortType]);
 
   return (
@@ -112,29 +94,22 @@ const Collection = () => {
           } sm:block`}
         >
           <h2 className="mb-3 text-sm font-medium">CATEGORIES</h2>
-          <div className="flex flex-col gap-2 text-sm font-light text-gray-700 ">
-            <div className="flex items-center gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                id="men"
-                value="Men"
-                onChange={toggleCategoryHandler}
-              />
-              <label htmlFor="men">Men</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                id="kids"
-                value="Kids"
-                onChange={toggleCategoryHandler}
-              />
-              <label htmlFor="kids">Kids</label>
-            </div>
+          <div className="flex flex-col gap-2 text-sm font-light text-gray-700">
+            <Categories
+              category={category}
+              setCategory={setCategory}
+              categoryLabel="Men"
+            />
+            <Categories
+              category={category}
+              setCategory={setCategory}
+              showFilter={showFilter}
+              categoryTitle="CATEGORIES"
+              categoryLabel="Kids"
+            />
           </div>
         </div>
+
         {/* SubCategory filter */}
         <div
           className={`border border-gray-300 pl-5 py-3 my-5 ${
@@ -143,36 +118,21 @@ const Collection = () => {
         >
           <h2 className="mb-3 text-sm font-medium">TYPE</h2>
           <div className="flex flex-col gap-2 text-sm font-light text-gray-700 ">
-            <div className="flex items-center gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                id="topwear"
-                value="Topwear"
-                onChange={toggleSubCategoryHandler}
-              />
-              <label htmlFor="topwear">Topwear</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                id="bottomwear"
-                value="Bottomwear"
-                onChange={toggleSubCategoryHandler}
-              />
-              <label htmlFor="bottomwear">Bottomwear</label>
-            </div>
-            <div className="flex items-center gap-2">
-              <input
-                className="w-3"
-                type="checkbox"
-                id="winterwear"
-                value="Winterwear"
-                onChange={toggleSubCategoryHandler}
-              />
-              <label htmlFor="winterwear">Winterwear</label>
-            </div>
+            <Categories
+              category={subCategory}
+              setCategory={setSubCategory}
+              categoryLabel="Topwear"
+            />
+            <Categories
+              category={subCategory}
+              setCategory={setSubCategory}
+              categoryLabel="Bottomwear"
+            />
+            <Categories
+              category={subCategory}
+              setCategory={setSubCategory}
+              categoryLabel="Winterwear"
+            />
           </div>
         </div>
       </div>
