@@ -4,6 +4,7 @@ import Title from "../components/Title";
 import Products from "../components/productComponents/Products";
 import { assets } from "../assets/frontend_assets/assets";
 import Categories from "../components/collectionComponents/Categories";
+import Filter from "../components/collectionComponents/Filter";
 
 const Collection = () => {
   // States
@@ -140,15 +141,7 @@ const Collection = () => {
         <div className="flex-1">
           <div className="flex items-center justify-between text-base sm:text-2xl mb-4">
             <Title titleText_1="ALL" titleText_2="COLLECTIONS" />
-            <select
-              className="border-2 border-gray-300 text-sm p-2"
-              onChange={(e) => setSortType(e.target.value)}
-              value={sortType}
-            >
-              <option value="relevant">Sort by: Relevant</option>
-              <option value="low-high">Sort by: Low to High</option>
-              <option value="high-low">Sort by: High to Low</option>
-            </select>
+            <Filter sortType={sortType} setSortType={setSortType} />
           </div>
         </div>
         {/* Products */}
