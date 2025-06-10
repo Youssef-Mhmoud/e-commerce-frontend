@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import Title from "../components/Title";
 import Products from "../components/productComponents/Products";
@@ -9,7 +9,6 @@ import Filter from "../components/collectionComponents/Filter";
 const Collection = () => {
   // States
   const [showFilter, setShowFilter] = useState(false);
-  const [filterProducts, setFilterProducts] = useState([]);
   const [category, setCategory] = useState([]);
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
@@ -17,57 +16,44 @@ const Collection = () => {
   const { products } = useContext(ShopContext);
 
   // Handlers
-  const applyFilterHandler = () => {
-    let copyProducts = products.slice();
+  const filteredAndSortedProducts = useMemo(() => {
+    if (!products || products.length === 0) return [];
 
-    // Category Condition
+    let result = [...products]; // Copy products
+
+    // Apply category filter
     if (category.length > 0) {
-      copyProducts = copyProducts.filter((product) =>
-        category.includes(product.category)
-      );
+      result = result.filter((product) => category.includes(product.category));
     }
 
-    // Sub Category Condition
+    // Apply subCategory filter
     if (subCategory.length > 0) {
-      copyProducts = copyProducts.filter((product) =>
+      result = result.filter((product) =>
         subCategory.includes(product.subCategory)
       );
     }
 
-    setFilterProducts(copyProducts);
-  };
-
-  const sortProducts = () => {
-    let copyFilterProducts = filterProducts.slice();
-
+    // Apply sorting
     switch (sortType) {
       case "low-high":
-        setFilterProducts(copyFilterProducts.sort((a, b) => a.price - b.price));
+        result.sort((a, b) => a.price - b.price);
         break;
       case "high-low":
-        setFilterProducts(copyFilterProducts.sort((a, b) => b.price - a.price));
+        result.sort((a, b) => b.price - a.price);
         break;
-
       default:
-        applyFilterHandler();
         break;
     }
-  };
+
+    return result;
+  }, [products, category, subCategory, sortType]);
 
   const showFilterHandler = () => {
     setShowFilter((isShowing) => !isShowing);
   };
 
-  // UseEffects
-  useEffect(() => {
-    applyFilterHandler();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [category, subCategory]);
-
-  useEffect(() => {
-    sortProducts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [sortType]);
+  const hasProducts = products && products.length > 0;
+  const hasFilteredProducts = filteredAndSortedProducts.length > 0;
 
   return (
     <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t border-t-gray-200">
@@ -104,8 +90,6 @@ const Collection = () => {
             <Categories
               category={category}
               setCategory={setCategory}
-              showFilter={showFilter}
-              categoryTitle="CATEGORIES"
               categoryLabel="Kids"
             />
           </div>
@@ -145,7 +129,17 @@ const Collection = () => {
           </div>
         </div>
         {/* Products */}
-        <Products products={filterProducts} />
+        {!hasProducts ? (
+          <div className="text-center py-12 text-gray-500">
+            <p className="text-lg">Loading products...</p>
+          </div>
+        ) : hasFilteredProducts ? (
+          <Products products={filteredAndSortedProducts} />
+        ) : (
+          <div className="text-center py-12 text-gray-500">
+            <p className="text-lg mb-2">Sorry, no products found</p>
+          </div>
+        )}
       </div>
     </div>
   );
