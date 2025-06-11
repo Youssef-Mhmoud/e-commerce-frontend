@@ -10,11 +10,17 @@ import Contact from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Navbar from "./components/navbarComponents/Navbar";
 import Footer from "./components/Footer";
+import SearchBar from "./components/navbarComponents/SearchBar";
+import { useContext } from "react";
+import { ShopContext } from "./context/ShopContext";
 
 const App = () => {
+  const { showSearch } = useContext(ShopContext);
+
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
       <Navbar />
+      {showSearch && <SearchBar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/collection" element={<Collection />} />
