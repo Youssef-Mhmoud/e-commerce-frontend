@@ -8,9 +8,11 @@ const Title = ({ titleText_1, titleText_2, paragraphText }) => {
         </p>
         <p className="w-8 sm:w-11 h-[1px] sm:h-[2px] bg-gray-700"></p>
       </div>
-      <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
-        {paragraphText}
-      </p>
+      {paragraphText && (
+        <p className="w-3/4 m-auto text-xs sm:text-sm md:text-base text-gray-600">
+          {paragraphText}
+        </p>
+      )}
     </div>
   );
 };
