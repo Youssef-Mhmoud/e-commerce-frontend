@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/frontend_assets/assets";
 import { useContext, useState } from "react";
 import NavbarLinks from "./NavbarLinks";
@@ -7,6 +7,7 @@ import { ShopContext } from "../../context/ShopContext";
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const { setShowSearch } = useContext(ShopContext);
+  const navigate = useNavigate();
 
   return (
     <nav className="flex justify-between items-center font-medium py-5">
@@ -22,7 +23,10 @@ const Navbar = () => {
           src={assets.search_icon}
           alt="Search icon"
           className="w-5 cursor-pointer"
-          onClick={() => setShowSearch(true)}
+          onClick={() => {
+            setShowSearch(true);
+            navigate("/collection");
+          }}
         />
         <div className="group relative">
           <img
