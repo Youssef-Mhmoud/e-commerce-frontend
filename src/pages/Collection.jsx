@@ -13,7 +13,7 @@ const Collection = () => {
   const [subCategory, setSubCategory] = useState([]);
   const [sortType, setSortType] = useState("relevant");
 
-  const { products } = useContext(ShopContext);
+  const { products, search, showSearch } = useContext(ShopContext);
 
   // Handlers
   const filteredAndSortedProducts = useMemo(() => {
@@ -45,8 +45,14 @@ const Collection = () => {
         break;
     }
 
+    // Apply search filter
+    if (search && showSearch)
+      result = result.filter((item) =>
+        item.name.toLowerCase().includes(search.toLowerCase())
+      );
+
     return result;
-  }, [products, category, subCategory, sortType]);
+  }, [products, category, subCategory, sortType, search, showSearch]);
 
   const showFilterHandler = () => {
     setShowFilter((isShowing) => !isShowing);
