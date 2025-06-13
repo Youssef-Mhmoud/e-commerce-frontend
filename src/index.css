@@ -20,9 +20,23 @@ a.active hr {
   display: none;
 }
 
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
 @media (max-width: 639px) {
   a.active {
     background-color: black;
     color: white;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
   }
 }

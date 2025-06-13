@@ -48,7 +48,7 @@ const Product = () => {
     return <CenteredMessage className="text-red-500">{error}</CenteredMessage>;
 
   return (
-    <div className="border-t-2 border-gray-200 pt-10 transition-opacity ease-in duration-500 opacity-100">
+    <div className="border-t-2 border-gray-200 pt-10 fade-in">
       {/* Details box */}
       <div className="flex flex-col sm:flex-row gap-12">
         {/* Image preview */}
