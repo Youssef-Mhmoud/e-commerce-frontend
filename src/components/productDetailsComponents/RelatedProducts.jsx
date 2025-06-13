@@ -6,16 +6,16 @@ const RelatedProducts = ({ products, productItem }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
-    const product = products.filter((item) => {
-      if (
+    if (!products.length || !productItem) return;
+
+    const related = products.filter(
+      (item) =>
+        item._id !== productItem._id &&
         item.category.includes(productItem.category) &&
         item.subCategory.includes(productItem.subCategory)
-      ) {
-        return item;
-      }
-    });
+    );
 
-    setRelatedProducts(product);
+    setRelatedProducts(related);
   }, [products, productItem]);
 
   return (
@@ -23,7 +23,13 @@ const RelatedProducts = ({ products, productItem }) => {
       <div className="text-3xl text-center">
         <Title titleText_1="RELATED" titleText_2="PRODUCTS" />
       </div>
-      <Products products={relatedProducts} />
+      {relatedProducts.length > 0 ? (
+        <Products products={relatedProducts} />
+      ) : (
+        <p className="text-center text-gray-500 mt-4">
+          No related products found.
+        </p>
+      )}
     </div>
   );
 };
