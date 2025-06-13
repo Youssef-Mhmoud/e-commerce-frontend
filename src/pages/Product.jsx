@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import CenteredMessage from "../components/CenteredMessage";
 import Images from "../components/productDetailsComponents/Images";
 import ProductDetails from "../components/productDetailsComponents/ProductDetails";
+import RelatedProducts from "../components/productDetailsComponents/RelatedProducts";
 
 const Product = () => {
   const [product, setProduct] = useState(null);
@@ -56,9 +57,31 @@ const Product = () => {
         <ProductDetails product={product} currency={currency} />
       </div>
       {/* Reviews */}
-      <div></div>
+      <div className="flex items-center mt-20 text-sm">
+        <p className="border border-gray-200 px-5 py-3 font-bold">
+          Description
+        </p>
+        <p className="border border-gray-200 px-5 py-3">Reviews (122)</p>
+      </div>
+      <div className="text-sm text-gray-500 border border-gray-200 p-6">
+        <p>
+          An e-commerce website is an online platform that facilitates the
+          buying and selling of products or services over the internet. It
+          serves as a virtual marketplace where businesses and individuals can
+          showcase their products, interact with customers, and conduct
+          transactions without the need for a physical presence. E-commerce
+          websites have gained immense popularity due to their convenience,
+          accessibility, and the global reach they offer.
+        </p>
+        <p className="mt-4">
+          E-commerce websites typically display products or services along with
+          detailed descriptions, images, prices, and any available variations
+          (e.g., sizes, colors). Each product usually has its own dedicated page
+          with relevant information.
+        </p>
+      </div>
       {/* Related Products */}
-      <div></div>
+      <RelatedProducts products={products} productItem={product} />
     </div>
   );
 };

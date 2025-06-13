@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 
 const Images = ({ product }) => {
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
-    if (product?.image?.length > 0 && !image) {
+    if (product?.image?.length > 0) {
       setImage(product.image[0]);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [product]);
 
   return (
