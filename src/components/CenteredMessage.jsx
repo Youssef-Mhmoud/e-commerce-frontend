@@ -1,5 +1,3 @@
-import React from "react";
-
 const CenteredMessage = ({ children, className = "" }) => {
   return (
     <div className="flex justify-center items-center min-h-screen">
