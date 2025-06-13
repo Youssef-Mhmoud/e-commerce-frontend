@@ -6,7 +6,7 @@ const RelatedProducts = ({ products, productItem }) => {
   const [relatedProducts, setRelatedProducts] = useState([]);
 
   useEffect(() => {
-    const pro = products.filter((item) => {
+    const product = products.filter((item) => {
       if (
         item.category.includes(productItem.category) &&
         item.subCategory.includes(productItem.subCategory)
@@ -15,16 +15,16 @@ const RelatedProducts = ({ products, productItem }) => {
       }
     });
 
-    setRelatedProducts(pro);
+    setRelatedProducts(product);
   }, [products, productItem]);
 
   return (
-    <>
-      <div className="text-3xl text-center mt-15">
+    <div className="my-24">
+      <div className="text-3xl text-center">
         <Title titleText_1="RELATED" titleText_2="PRODUCTS" />
       </div>
       <Products products={relatedProducts} />
-    </>
+    </div>
   );
 };
 
