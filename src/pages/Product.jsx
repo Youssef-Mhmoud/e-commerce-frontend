@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { useParams } from "react-router-dom";
+import CenteredMessage from "../components/CenteredMessage";
 
 const Product = () => {
   const [product, setProduct] = useState(null);
@@ -19,9 +20,10 @@ const Product = () => {
     }
 
     try {
-      const foundProduct = setProduct(
-        products.find((product) => product._id === productId)
+      const foundProduct = products.find(
+        (product) => product._id === productId
       );
+
       if (foundProduct) {
         setProduct(foundProduct);
       }
@@ -32,40 +34,24 @@ const Product = () => {
     } finally {
       setLoading(false);
     }
-  }, [products, productId, product]);
+  }, [products, productId]);
 
   useEffect(() => {
-    if (product && product.image && product.image.length > 0 && !image) {
+    if (product?.image?.length > 0 && !image) {
       setImage(product.image[0]);
     }
-  }, [product, image]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [product]);
 
   // Loading state
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg">Loading product...</div>
-      </div>
-    );
-  }
+  if (loading) return <CenteredMessage>Loading product...</CenteredMessage>;
 
   // Check product existing
-  if (!product) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg">Product not found</div>
-      </div>
-    );
-  }
+  if (!product) return <CenteredMessage>Product not found</CenteredMessage>;
 
   // Error handling
-  if (error) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="text-lg text-red-500">{error}</div>
-      </div>
-    );
-  }
+  if (error)
+    return <CenteredMessage className="text-red-500">{error}</CenteredMessage>;
 
   return (
     <div className="border-t-2 border-gray-200 pt-10 transition-opacity ease-in duration-500 opacity-100">
