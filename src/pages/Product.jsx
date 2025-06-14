@@ -48,7 +48,7 @@ const Product = () => {
     return <CenteredMessage className="text-red-500">{error}</CenteredMessage>;
 
   return (
-    <div className="border-t-2 border-gray-200 pt-10 fade-in">
+    <div className="border-t border-gray-200 pt-10 fade-in">
       {/* Details box */}
       <div className="flex flex-col sm:flex-row gap-12">
         {/* Image preview */}
@@ -58,10 +58,12 @@ const Product = () => {
       </div>
       {/* Reviews */}
       <div className="flex items-center mt-20 text-sm">
-        <p className="border border-gray-200 px-5 py-3 font-bold">
+        <p className="border border-gray-200 px-5 py-3 bg-gray-200 hover:bg-gray-200 duration-200 cursor-pointer">
           Description
         </p>
-        <p className="border border-gray-200 px-5 py-3">Reviews (122)</p>
+        <p className="border border-gray-200 px-5 py-3 cursor-pointer hover:bg-gray-200 duration-200">
+          Reviews (122)
+        </p>
       </div>
       <div className="text-sm text-gray-500 border border-gray-200 p-6">
         <p>

@@ -8,6 +8,11 @@ const ShopContextProvider = ({ children }) => {
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
+  // const [cartItems, setCartItems] = useState({});
+
+  const addToCart = () => {
+   
+  };
 
   const value = {
     products,
@@ -17,6 +22,8 @@ const ShopContextProvider = ({ children }) => {
     setSearch,
     showSearch,
     setShowSearch,
+    // cartItems,
+    addToCart,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;

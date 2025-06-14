@@ -17,7 +17,7 @@ const ProductDetails = ({ product, currency }) => {
         {currency}
         {product.price}
       </p>
-      <p className="text-sm text-gray-500 mt-5 sm:w-4/5">
+      <p className="text-gray-500 mt-5 sm:w-4/5">
         {product.description}
       </p>
       {product.sizes && (
