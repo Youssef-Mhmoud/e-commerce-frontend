@@ -1,9 +1,6 @@
 import { Route, Routes } from "react-router-dom";
-import Navbar from "./components/navbarComponents/Navbar";
-import Footer from "./components/Footer";
-import SearchBar from "./components/navbarComponents/SearchBar";
-import { lazy, Suspense, useContext } from "react";
-import { ShopContext } from "./context/ShopContext";
+import { lazy, Suspense } from "react";
+import Layout from "./components/Layout";
 
 const Home = lazy(() => import("./pages/Home"));
 const Collection = lazy(() => import("./pages/Collection"));
@@ -16,12 +13,8 @@ const PlaceOrder = lazy(() => import("./pages/PlaceOrder"));
 const Orders = lazy(() => import("./pages/Orders"));
 
 const App = () => {
-  const { showSearch } = useContext(ShopContext);
-
   return (
-    <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <Navbar />
-      {showSearch && <SearchBar />}
+    <Layout>
       <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -36,8 +29,7 @@ const App = () => {
           <Route path="*" element={<div>Not Found</div>} />
         </Routes>
       </Suspense>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
