@@ -34,7 +34,7 @@ const Navbar = () => {
             alt="Profile icon"
             className="w-5 cursor-pointer"
           />
-          <div className="pt-2 absolute right-0 hidden group-hover:block">
+          <div className="pt-2 absolute right-0 hidden group-hover:block z-10">
             <div className="flex flex-col gap-2 w-36 bg-slate-100 rounded px-5 py-3 text-gray-500">
               <p className="hover:text-black cursor-pointer duration-300">
                 My Profile
@@ -68,7 +68,7 @@ const Navbar = () => {
 
       {/* Sidebar menu for small screens */}
       <div
-        className={`absolute top-0 right-0 bottom-0 bg-white overflow-hidden transition-all  ${
+        className={`absolute top-0 right-0 bottom-0 bg-white overflow-hidden z-10 transition-all  ${
           visible ? "w-full" : "w-0"
         }`}
       >

@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { ShopContext } from "../../context/ShopContext";
 
 const ProductDetails = ({ product, currency }) => {
   const [size, setSize] = useState("");
+  const { addToCart } = useContext(ShopContext);
 
   return (
     <div className="flex-1">
@@ -17,9 +19,7 @@ const ProductDetails = ({ product, currency }) => {
         {currency}
         {product.price}
       </p>
-      <p className="text-gray-500 mt-5 sm:w-4/5">
-        {product.description}
-      </p>
+      <p className="text-gray-500 mt-5 sm:w-4/5">{product.description}</p>
       {product.sizes && (
         <div className="mt-5">
           <p className="text-sm mb-4">Select Size</p>
@@ -41,7 +41,10 @@ const ProductDetails = ({ product, currency }) => {
           </ul>
         </div>
       )}
-      <button className="bg-black text-white px-8 py-3 text-sm mt-6 active:bg-gray-700 hover:opacity-80 duration-300 cursor-pointer">
+      <button
+        onClick={() => addToCart(product._id, size)}
+        className="bg-black text-white px-8 py-3 text-sm mt-6 active:bg-gray-700 hover:opacity-80 duration-300 cursor-pointer"
+      >
         ADD TO CART
       </button>
       <hr className="mt-8 sm:w-4/5 text-gray-200" />

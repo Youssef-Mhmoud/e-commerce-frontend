@@ -7,9 +7,23 @@ const ShopContextProvider = ({ children }) => {
   const delivery_fee = 10;
   const [search, setSearch] = useState("");
   const [showSearch, setShowSearch] = useState(false);
-  // const [cartItems, setCartItems] = useState({});
+  const [cartItems, setCartItems] = useState({});
 
-  const addToCart = () => {};
+  const addToCart = (productId, size) => {
+    if (!productId || !size) return;
+
+    setCartItems((prevCart) => {
+      const newCart = { ...prevCart };
+
+      if (!newCart[productId]) newCart[productId] = {};
+
+      if (!newCart[productId][size]) newCart[productId][size] = { quantity: 0 };
+
+      newCart[productId][size].quantity += 1;
+
+      return newCart;
+    });
+  };
 
   const value = {
     products,
@@ -19,7 +33,7 @@ const ShopContextProvider = ({ children }) => {
     setSearch,
     showSearch,
     setShowSearch,
-    // cartItems,
+    cartItems,
     addToCart,
   };
 
