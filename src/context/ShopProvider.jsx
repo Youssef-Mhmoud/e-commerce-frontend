@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
 import { ShopContext } from "./ShopContext";
+import { toast } from "react-toastify";
 
 const ShopContextProvider = ({ children }) => {
   const currency = "$";
@@ -10,7 +11,14 @@ const ShopContextProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState({});
 
   const addToCart = (productId, size) => {
-    if (!productId || !size) return;
+    if (!productId) return;
+
+    if (!size) {
+      toast.error("Select Product Size!");
+      return;
+    }
+
+    if (size) toast.apply("Add Product Successfully");
 
     setCartItems((prevCart) => {
       const newCart = { ...prevCart };
