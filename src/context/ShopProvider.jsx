@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { products } from "../assets/frontend_assets/assets";
 import { ShopContext } from "./ShopContext";
 import { toast } from "react-toastify";
@@ -18,8 +18,6 @@ const ShopContextProvider = ({ children }) => {
       return;
     }
 
-    if (size) toast.apply("Add Product Successfully");
-
     setCartItems((prevCart) => {
       const newCart = { ...prevCart };
 
@@ -33,6 +31,19 @@ const ShopContextProvider = ({ children }) => {
     });
   };
 
+  const getCartAmount = useCallback(() => {
+    let total = 0;
+
+    for (const productId in cartItems) {
+      const sizes = cartItems[productId];
+      for (const size in sizes) {
+        total += sizes[size].quantity;
+      }
+    }
+    
+    return total;
+  }, [cartItems]);
+
   const value = {
     products,
     currency,
@@ -43,6 +54,7 @@ const ShopContextProvider = ({ children }) => {
     setShowSearch,
     cartItems,
     addToCart,
+    getCartAmount,
   };
 
   return <ShopContext.Provider value={value}>{children}</ShopContext.Provider>;
