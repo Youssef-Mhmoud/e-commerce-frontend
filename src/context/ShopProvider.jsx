@@ -16,6 +16,8 @@ const ShopContextProvider = ({ children }) => {
     if (!size) {
       toast.error("Select Product Size!");
       return;
+    } else {
+      toast.success("Add Product Successfully");
     }
 
     setCartItems((prevCart) => {
@@ -40,7 +42,7 @@ const ShopContextProvider = ({ children }) => {
         total += sizes[size].quantity;
       }
     }
-    
+
     return total;
   }, [cartItems]);
 

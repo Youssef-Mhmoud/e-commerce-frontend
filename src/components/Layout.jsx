@@ -3,14 +3,14 @@ import { ShopContext } from "../context/ShopContext";
 import Navbar from "./navbarComponents/Navbar";
 import Footer from "./Footer";
 import SearchBar from "./navbarComponents/SearchBar";
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from "react-toastify";
 
 const Layout = ({ children }) => {
   const { showSearch } = useContext(ShopContext);
 
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <ToastContainer />
+      <ToastContainer closeOnClick />
       <Navbar />
       {showSearch && <SearchBar />}
       {children}
