@@ -1,9 +1,9 @@
-import { useState, useContext } from "react";
-import { ShopContext } from "../../context/ShopContext";
+import React, { useState, useContext } from "react";
+import { CartContext } from "../../context/ShopContext";
 
 const ProductDetails = ({ product, currency }) => {
   const [size, setSize] = useState("");
-  const { addToCart } = useContext(ShopContext);
+  const { addToCart } = useContext(CartContext);
 
   return (
     <div className="flex-1">
@@ -57,4 +57,4 @@ const ProductDetails = ({ product, currency }) => {
   );
 };
 
-export default ProductDetails;
+export default React.memo(ProductDetails);

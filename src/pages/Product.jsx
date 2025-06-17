@@ -25,9 +25,7 @@ const Product = () => {
         (product) => product._id === productId
       );
 
-      if (foundProduct) {
-        setProduct(foundProduct);
-      }
+      if (foundProduct) setProduct(foundProduct);
 
       // eslint-disable-next-line no-unused-vars
     } catch (err) {
@@ -48,11 +46,11 @@ const Product = () => {
     return <CenteredMessage className="text-red-500">{error}</CenteredMessage>;
 
   return (
-    <div className="border-t border-gray-200 pt-10 fade-in">
+    <div className="border-top pt-10 fade-in">
       {/* Details box */}
       <div className="flex flex-col sm:flex-row gap-12">
         {/* Image preview */}
-        <Images product={product} />
+        <Images images={product.image} name={product.name} />
         {/* Details */}
         <ProductDetails product={product} currency={currency} />
       </div>

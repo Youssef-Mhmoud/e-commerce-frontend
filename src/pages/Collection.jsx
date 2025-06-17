@@ -62,7 +62,7 @@ const Collection = () => {
   const hasFilteredProducts = filteredAndSortedProducts.length > 0;
 
   return (
-    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-t border-t-gray-200">
+    <div className="flex flex-col sm:flex-row gap-1 sm:gap-10 pt-10 border-top">
       {/* Filter options */}
       <div className="min-w-60">
         <div
