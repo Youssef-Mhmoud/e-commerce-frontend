@@ -32,7 +32,7 @@ const CartContextProvider = ({ children }) => {
     });
   };
 
-  const getCartAmount = useCallback(() => {
+  const getCartCount = useCallback(() => {
     let total = 0;
 
     for (const productId in cartItems) {
@@ -54,6 +54,17 @@ const CartContextProvider = ({ children }) => {
     });
   };
 
+  const removeSizeCart = (productId, size, quantity) => {};
+
+  const removeProductCart = (productId) => {
+    setCartItems((prevCart) => {
+      const updateCart = Object.entries(prevCart).filter(([id]) => {
+        return id !== productId;
+      });
+      return updateCart;
+    });
+  };
+
   const value = useMemo(
     () => ({
       products,
@@ -61,10 +72,11 @@ const CartContextProvider = ({ children }) => {
       delivery_fee,
       cartItems,
       addToCart,
-      getCartAmount,
+      getCartCount,
       updateQuantity,
+      removeProductCart,
     }),
-    [cartItems, getCartAmount]
+    [cartItems, getCartCount]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

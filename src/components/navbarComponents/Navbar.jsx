@@ -9,7 +9,7 @@ import ProfileIcon from "./ProfileIcon";
 const Navbar = () => {
   const [visible, setVisible] = useState(false);
   const { setShowSearch } = useContext(ShopContext);
-  const { getCartAmount } = useContext(CartContext);
+  const { getCartCount } = useContext(CartContext);
   const navigate = useNavigate();
 
   return (
@@ -34,7 +34,7 @@ const Navbar = () => {
 
         <ProfileIcon />
 
-        <CartIcon cartAmount={getCartAmount()} />
+        <CartIcon cartAmount={getCartCount()} />
         <img
           onClick={() => setVisible(true)}
           src={assets.menu_icon}

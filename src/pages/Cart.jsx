@@ -4,7 +4,7 @@ import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity } =
+  const { products, currency, cartItems, updateQuantity, removeProductCart } =
     useContext(CartContext);
   const [cartData, setCartData] = useState([]);
 
@@ -53,6 +53,7 @@ const Cart = () => {
                       className="w-5 cursor-pointer"
                       src={assets.bin_icon}
                       alt="remove product from cart"
+                      onClick={() => removeProductCart(product._id)}
                     />
                   </div>
                 </div>
@@ -79,7 +80,7 @@ const Cart = () => {
                                 +e.target.value
                               )
                         }
-                        min="1"
+                        min={0}
                         className="border max-w-10 sm:max-w-14 px-1 sm:px-2 py-1 outline-0 rounded text-center"
                       />
                     </div>
