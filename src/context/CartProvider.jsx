@@ -54,13 +54,29 @@ const CartContextProvider = ({ children }) => {
     });
   };
 
-  const removeSizeCart = (productId, size, quantity) => {};
+  const removeSizeCart = (productId, size, quantity) => {
+    if (quantity === 0) {
+      setCartItems((prevCart) => {
+        // eslint-disable-next-line no-unused-vars
+        const { [size]: removedSize, ...updateSize } = prevCart[productId];
+
+        if (Object.keys(updateSize).length === 0) {
+          // eslint-disable-next-line no-unused-vars
+          const { [productId]: removedProduct, ...newCart } = prevCart;
+          return newCart;
+        }
+        return {
+          ...prevCart,
+          [productId]: updateSize,
+        };
+      });
+    }
+  };
 
   const removeProductCart = (productId) => {
     setCartItems((prevCart) => {
-      const updateCart = Object.entries(prevCart).filter(([id]) => {
-        return id !== productId;
-      });
+      // eslint-disable-next-line no-unused-vars
+      const { [productId]: removed, ...updateCart } = prevCart;
       return updateCart;
     });
   };
@@ -75,6 +91,7 @@ const CartContextProvider = ({ children }) => {
       getCartCount,
       updateQuantity,
       removeProductCart,
+      removeSizeCart,
     }),
     [cartItems, getCartCount]
   );

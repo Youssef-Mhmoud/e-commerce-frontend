@@ -4,8 +4,14 @@ import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
 
 const Cart = () => {
-  const { products, currency, cartItems, updateQuantity, removeProductCart } =
-    useContext(CartContext);
+  const {
+    products,
+    currency,
+    cartItems,
+    updateQuantity,
+    removeProductCart,
+    removeSizeCart,
+  } = useContext(CartContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
@@ -73,7 +79,11 @@ const Cart = () => {
                         value={quantity}
                         onChange={(e) =>
                           e.target.value === "" || e.target.value === "0"
-                            ? null
+                            ? removeSizeCart(
+                                product._id,
+                                sizeLabel,
+                                +e.target.value
+                              )
                             : updateQuantity(
                                 product._id,
                                 sizeLabel,
