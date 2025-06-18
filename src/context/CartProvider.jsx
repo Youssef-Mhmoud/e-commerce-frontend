@@ -45,6 +45,15 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
+  const updateQuantity = (productId, size, newQuantity) => {
+    setCartItems((prevCart) => {
+      const cartData = { ...prevCart };
+
+      cartData[productId][size].quantity = newQuantity;
+      return cartData;
+    });
+  };
+
   const value = useMemo(
     () => ({
       products,
@@ -53,6 +62,7 @@ const CartContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       getCartAmount,
+      updateQuantity,
     }),
     [cartItems, getCartAmount]
   );

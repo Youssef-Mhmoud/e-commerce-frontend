@@ -4,19 +4,22 @@ import Title from "../components/Title";
 import { assets } from "../assets/frontend_assets/assets";
 
 const Cart = () => {
-  const { products, currency, cartItems } = useContext(CartContext);
+  const { products, currency, cartItems, updateQuantity } =
+    useContext(CartContext);
   const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
-    const selectedProducts = [];
+    if (!products.length) return;
 
-    for (const productId in cartItems) {
-      let product = products.find((product) => product._id === productId);
-      selectedProducts.push({ product, size: cartItems[productId] });
-    }
+    const selectedProducts = Object.entries(cartItems)
+      .map(([productId, sizes]) => {
+        const product = products.find((p) => p._id === productId);
+        return product ? { product, size: sizes } : null;
+      })
+      .filter(Boolean);
 
     setCartData(selectedProducts);
-  }, [cartItems]);
+  }, [cartItems, products]);
 
   return (
     <div className="border-top pt-6">
@@ -49,7 +52,7 @@ const Cart = () => {
                     <img
                       className="w-5 cursor-pointer"
                       src={assets.bin_icon}
-                      alt="clear product from your cart"
+                      alt="remove product from cart"
                     />
                   </div>
                 </div>
@@ -61,12 +64,23 @@ const Cart = () => {
                       key={index}
                       className="flex sm:flex-col gap-3 items-center"
                     >
-                      <div>{sizeLabel}</div>
+                      <div className="py-1 px-3 border border-gray-300 bg-gray-50">
+                        {sizeLabel}
+                      </div>
                       <input
                         type="number"
-                        defaultValue={quantity}
+                        value={quantity}
+                        onChange={(e) =>
+                          e.target.value === "" || e.target.value === "0"
+                            ? null
+                            : updateQuantity(
+                                product._id,
+                                sizeLabel,
+                                +e.target.value
+                              )
+                        }
                         min="1"
-                        className="border max-w-10 sm:max-w-14 px-1 sm:px-2 py-1 outline-0 rounded"
+                        className="border max-w-10 sm:max-w-14 px-1 sm:px-2 py-1 outline-0 rounded text-center"
                       />
                     </div>
                   )
@@ -76,7 +90,7 @@ const Cart = () => {
           ))}
         </div>
       ) : (
-        <p>No Product In Cart</p>
+        <p className="text-center py-10 text-gray-500">Your cart is empty.</p>
       )}
     </div>
   );
