@@ -57,6 +57,10 @@ const CartContextProvider = ({ children }) => {
   const removeSizeCart = (productId, size, quantity) => {
     if (quantity === 0) {
       setCartItems((prevCart) => {
+        if (!prevCart[productId] || !prevCart[productId][size]) {
+          return prevCart;
+        }
+
         // eslint-disable-next-line no-unused-vars
         const { [size]: removedSize, ...updateSize } = prevCart[productId];
 
