@@ -1,15 +1,42 @@
-import { useContext } from "react";
+import { useCallback, useContext, useState } from "react";
 import { CartContext } from "../../context/ShopContext";
 import { assets } from "../../assets/frontend_assets/assets";
-import DeleteAlert from "../DeleteAlert";
+import Alert from "../Alert";
 
 const ProductCart = ({ currency, cartData }) => {
   const { removeProductCart, updateQuantity, removeSizeCart } =
     useContext(CartContext);
+  const [alert, setAlert] = useState({
+    show: false,
+    productId: null,
+    productName: "",
+    quantity: 1,
+  });
+
+  const handleShowAlert = useCallback((productId, productName, quantity) => {
+    if (quantity === 0) {
+      setAlert({ show: true, productId, productName, quantity });
+      return;
+    }
+    setAlert({ show: true, productId, productName });
+  }, []);
+
+  const handleCloseAlert = useCallback(() => {
+    setAlert({ show: false, productId: null, productName: "" });
+  }, []);
 
   return (
     <>
-      <DeleteAlert />
+      {alert.show && (
+        <Alert
+          removeProduct={removeProductCart}
+          removeSizeCart={removeSizeCart}
+          onClose={handleCloseAlert}
+          productId={alert.productId}
+          productName={alert.productName}
+          quantity={alert.quantity}
+        />
+      )}
       {cartData.map(({ product, size }) => (
         <div
           key={product._id}
@@ -18,7 +45,7 @@ const ProductCart = ({ currency, cartData }) => {
           <div className="flex gap-3">
             <img
               className="w-20 sm:w-22"
-              src={product.image[0]}
+              src={product.image?.[0]}
               alt={product.name}
             />
             <div>
@@ -32,7 +59,7 @@ const ProductCart = ({ currency, cartData }) => {
                   className="w-5 cursor-pointer"
                   src={assets.bin_icon}
                   alt="remove product from cart"
-                  onClick={() => removeProductCart(product._id)}
+                  onClick={() => handleShowAlert(product._id, product.name)}
                 />
               </div>
             </div>
@@ -48,7 +75,7 @@ const ProductCart = ({ currency, cartData }) => {
                   value={quantity}
                   onChange={(e) =>
                     e.target.value === "" || e.target.value === "0"
-                      ? removeSizeCart(product._id, sizeLabel, +e.target.value)
+                      ? handleShowAlert(product._id, sizeLabel, +e.target.value)
                       : updateQuantity(product._id, sizeLabel, +e.target.value)
                   }
                   min={0}
