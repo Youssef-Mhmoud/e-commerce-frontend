@@ -11,15 +11,25 @@ const ProductCart = ({ currency, cartData }) => {
     productId: null,
     productName: "",
     quantity: 1,
+    sizeLabel: "",
   });
 
-  const handleShowAlert = useCallback((productId, productName, quantity) => {
-    if (quantity === 0) {
-      setAlert({ show: true, productId, productName, quantity });
-      return;
-    }
-    setAlert({ show: true, productId, productName });
-  }, []);
+  const handleShowAlert = useCallback(
+    (productId, productName, quantity, sizeLabel) => {
+      if (quantity === 0 && sizeLabel) {
+        setAlert({
+          show: true,
+          productId,
+          productName,
+          sizeLabel,
+          quantity: quantity ?? 1,
+        });
+        return;
+      }
+      setAlert({ show: true, productId, productName });
+    },
+    []
+  );
 
   const handleCloseAlert = useCallback(() => {
     setAlert({ show: false, productId: null, productName: "" });
@@ -35,6 +45,7 @@ const ProductCart = ({ currency, cartData }) => {
           productId={alert.productId}
           productName={alert.productName}
           quantity={alert.quantity}
+          sizeLabel={alert.sizeLabel}
         />
       )}
       {cartData.map(({ product, size }) => (
@@ -75,7 +86,12 @@ const ProductCart = ({ currency, cartData }) => {
                   value={quantity}
                   onChange={(e) =>
                     e.target.value === "" || e.target.value === "0"
-                      ? handleShowAlert(product._id, sizeLabel, +e.target.value)
+                      ? handleShowAlert(
+                          product._id,
+                          product.name,
+                          +e.target.value,
+                          sizeLabel
+                        )
                       : updateQuantity(product._id, sizeLabel, +e.target.value)
                   }
                   min={0}
