@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { CartContext } from "../../context/ShopContext";
-import { assets } from "../assets/frontend_assets/assets";
+import { assets } from "../../assets/frontend_assets/assets";
+import DeleteAlert from "../DeleteAlert";
 
 const ProductCart = ({ currency, cartData }) => {
   const { removeProductCart, updateQuantity, removeSizeCart } =
@@ -8,6 +9,7 @@ const ProductCart = ({ currency, cartData }) => {
 
   return (
     <>
+      <DeleteAlert />
       {cartData.map(({ product, size }) => (
         <div
           key={product._id}
