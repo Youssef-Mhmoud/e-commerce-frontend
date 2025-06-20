@@ -15,39 +15,35 @@ const ProductCart = ({ currency, cartData }) => {
   });
 
   const handleShowAlert = useCallback(
-    (productId, productName, quantity, sizeLabel) => {
-      if (quantity === 0 && sizeLabel) {
-        setAlert({
-          show: true,
-          productId,
-          productName,
-          sizeLabel,
-          quantity: quantity ?? 1,
-        });
-        return;
-      }
-      setAlert({ show: true, productId, productName });
+    (productId, productName, quantity = 1, sizeLabel = "") => {
+      setAlert({ show: true, productId, productName, sizeLabel, quantity });
     },
     []
   );
 
   const handleCloseAlert = useCallback(() => {
-    setAlert({ show: false, productId: null, productName: "" });
+    setAlert({
+      show: false,
+      productId: null,
+      productName: "",
+      quantity: null,
+      sizeLabel: "",
+    });
   }, []);
 
   return (
     <>
-      {alert.show && (
-        <Alert
-          removeProduct={removeProductCart}
-          removeSizeCart={removeSizeCart}
-          onClose={handleCloseAlert}
-          productId={alert.productId}
-          productName={alert.productName}
-          quantity={alert.quantity}
-          sizeLabel={alert.sizeLabel}
-        />
-      )}
+      <Alert
+        removeProduct={removeProductCart}
+        removeSizeCart={removeSizeCart}
+        onClose={handleCloseAlert}
+        productId={alert.productId}
+        productName={alert.productName}
+        quantity={alert.quantity}
+        sizeLabel={alert.sizeLabel}
+        showAlert={alert.show}
+      />
+
       {cartData.map(({ product, size }) => (
         <div
           key={product._id}
@@ -95,6 +91,7 @@ const ProductCart = ({ currency, cartData }) => {
                       : updateQuantity(product._id, sizeLabel, +e.target.value)
                   }
                   min={0}
+                  max={99}
                   className="border max-w-10 sm:max-w-14 px-1 sm:px-2 py-1 outline-0 rounded text-center"
                 />
               </div>
