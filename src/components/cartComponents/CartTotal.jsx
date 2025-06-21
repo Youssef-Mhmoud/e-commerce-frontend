@@ -1,6 +1,12 @@
+import { useContext } from "react";
 import Title from "../Title";
+import { CartContext } from "../../context/ShopContext";
 
 const CartTotal = ({ currency }) => {
+  // const { getTotalAmount } = useContext(CartContext);
+
+
+
   return (
     <div className="flex flex-col items-end my-10">
       <div className="w-full sm:w-1/2">

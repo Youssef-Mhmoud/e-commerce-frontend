@@ -45,6 +45,21 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
+  const getTotalAmount = (totalPrice) => {
+    let total = 0;
+
+    // Amount of sizes
+    for (const productId in cartItems) {
+      const sizes = cartItems[productId];
+      for (const size in cartItems[productId]) {
+        const quantity = sizes[size].quantity;
+        total += quantity;
+      }
+      console.log(total);
+      return total * totalPrice;
+    }
+  };
+
   const updateQuantity = (productId, size, newQuantity) => {
     setCartItems((prevCart) => {
       const cartData = { ...prevCart };
@@ -93,6 +108,7 @@ const CartContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       getCartCount,
+      getTotalAmount,
       updateQuantity,
       removeProductCart,
       removeSizeCart,
