@@ -45,19 +45,22 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
-  const getTotalAmount = (totalPrice) => {
+  const getTotalAmount = () => {
     let total = 0;
 
-    // Amount of sizes
-    for (const productId in cartItems) {
-      const sizes = cartItems[productId];
-      for (const size in cartItems[productId]) {
-        const quantity = sizes[size].quantity;
-        total += quantity;
+    Object.keys(cartItems).forEach((id) => {
+      const product = products.find((p) => p._id === id);
+      if (!product) return;
+
+      const price = product.price;
+      const sizes = cartItems[id];
+
+      for (const size in sizes) {
+        const { quantity } = sizes[size];
+        total += quantity * price;
       }
-      console.log(total);
-      return total * totalPrice;
-    }
+    });
+    return total;
   };
 
   const updateQuantity = (productId, size, newQuantity) => {
@@ -99,6 +102,8 @@ const CartContextProvider = ({ children }) => {
       return updateCart;
     });
   };
+
+  console.log(getTotalAmount());
 
   const value = useMemo(
     () => ({

@@ -3,9 +3,7 @@ import Title from "../Title";
 import { CartContext } from "../../context/ShopContext";
 
 const CartTotal = ({ currency }) => {
-  // const { getTotalAmount } = useContext(CartContext);
-
-
+  const { getTotalAmount } = useContext(CartContext);
 
   return (
     <div className="flex flex-col items-end my-10">
@@ -23,7 +21,10 @@ const CartTotal = ({ currency }) => {
         </div>
         <div className="flex justify-between py-2 text-sm">
           <p className="font-semibold">Total</p>
-          <p>{currency}</p>
+          <p>
+            {currency}
+            {getTotalAmount()}
+          </p>
         </div>
         <button className="bg-black text-white py-3 px-8 text-sm block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300">
           PROCEED TO CHECKOUT
