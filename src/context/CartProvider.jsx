@@ -45,7 +45,7 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
-  const getTotalAmount = () => {
+  const getTotalAmount = useCallback(() => {
     let total = 0;
 
     Object.keys(cartItems).forEach((id) => {
@@ -61,7 +61,7 @@ const CartContextProvider = ({ children }) => {
       }
     });
     return total;
-  };
+  }, [cartItems]);
 
   const updateQuantity = (productId, size, newQuantity) => {
     setCartItems((prevCart) => {
@@ -102,8 +102,6 @@ const CartContextProvider = ({ children }) => {
       return updateCart;
     });
   };
-
-  console.log(getTotalAmount());
 
   const value = useMemo(
     () => ({
