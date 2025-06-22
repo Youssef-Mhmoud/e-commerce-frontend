@@ -45,6 +45,24 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
+  const getTotalAmount = useCallback(() => {
+    let total = 0;
+
+    Object.keys(cartItems).forEach((id) => {
+      const product = products.find((p) => p._id === id);
+      if (!product) return;
+
+      const price = product.price;
+      const sizes = cartItems[id];
+
+      for (const size in sizes) {
+        const { quantity } = sizes[size];
+        total += quantity * price;
+      }
+    });
+    return total;
+  }, [cartItems]);
+
   const updateQuantity = (productId, size, newQuantity) => {
     setCartItems((prevCart) => {
       const cartData = { ...prevCart };
@@ -93,6 +111,7 @@ const CartContextProvider = ({ children }) => {
       cartItems,
       addToCart,
       getCartCount,
+      getTotalAmount,
       updateQuantity,
       removeProductCart,
       removeSizeCart,
