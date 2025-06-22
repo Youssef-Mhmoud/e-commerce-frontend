@@ -15,8 +15,8 @@ const CartTotal = ({ currency }) => {
           <p>Shipping Fee</p>
           <p>{currency}</p>
         </div>
-        <div className="flex justify-between py-2 text-sm">
-          <p className="font-semibold">Total</p>
+        <div className="flex justify-between py-2 text-sm font-bold">
+          <p>Total</p>
           <p>{currency}</p>
         </div>
         <button className="bg-black text-white py-3 px-8 text-sm block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300">
