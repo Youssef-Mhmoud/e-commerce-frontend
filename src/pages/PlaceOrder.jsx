@@ -4,13 +4,13 @@ import Title from "../components/Title";
 
 const PlaceOrder = () => {
   return (
-    <div className="flex">
-      <form>
+    <form className="flex justify-between">
+      <div className="basis-1/2">
         <div>
           <input type="text" placeholder="First name" required />
           <input type="text" placeholder="Last name" required />
         </div>
-        <div>
+        <div className="flex flex-col">
           <input type="email" placeholder="Email address" required />
           <input type="text" placeholder="Street" required />
         </div>
@@ -23,8 +23,9 @@ const PlaceOrder = () => {
           <input type="text" placeholder="Country" required />
         </div>
         <input type="tel" placeholder="Phone" required />
-      </form>
-      <div>
+      </div>
+
+      <div className="basis-1/2">
         <div>
           <CartTotal />
         </div>
@@ -43,8 +44,9 @@ const PlaceOrder = () => {
             <img src={assets.stripe_logo} alt="Stripe payment method" />
           </div>
         </div>
+        <button>PLACE ORDER</button>
       </div>
-    </div>
+    </form>
   );
 };
 

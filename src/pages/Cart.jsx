@@ -32,7 +32,9 @@ const Cart = () => {
           <div className="border-t border-b border-gray-200 text-gray-700">
             <ProductCart cartData={cartData} currency={currency} />
           </div>
-          <CartTotal currency={currency} />
+          <div className="my-10 sm:w-1/2 w-full ml-auto">
+            <CartTotal />
+          </div>
         </>
       ) : (
         <p className="text-center py-10 text-gray-500">Your cart is empty.</p>
