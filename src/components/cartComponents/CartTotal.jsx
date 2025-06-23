@@ -3,7 +3,7 @@ import Title from "../Title";
 import { CartContext } from "../../context/ShopContext";
 import { useNavigate } from "react-router-dom";
 
-const CartTotal = () => {
+const CartTotal = ({ showButton = true }) => {
   const { getTotalAmount, delivery_fee, currency } = useContext(CartContext);
   const navigate = useNavigate();
 
@@ -34,12 +34,14 @@ const CartTotal = () => {
           {getTotalAmount() + delivery_fee}
         </p>
       </div>
-      <button
-        onClick={() => navigate("/place-order")}
-        className="bg-black text-white py-3 px-8 text-sm block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300"
-      >
-        PROCEED TO CHECKOUT
-      </button>
+      {showButton && (
+        <button
+          onClick={() => navigate("/place-order")}
+          className="bg-black text-white py-3 px-8 text-sm block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300"
+        >
+          PROCEED TO CHECKOUT
+        </button>
+      )}
     </div>
   );
 };
