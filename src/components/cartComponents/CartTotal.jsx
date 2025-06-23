@@ -27,18 +27,13 @@ const CartTotal = ({ currency }) => {
             {delivery_fee}
           </p>
         </div>
-<<<<<<< HEAD
+
         <div className="flex justify-between py-2 text-sm font-bold">
           <p>Total</p>
-          <p>{currency}</p>
-=======
-        <div className="flex justify-between py-2 text-sm">
-          <p className="font-semibold">Total</p>
           <p>
             {currency}
             {getTotalAmount() + delivery_fee}
           </p>
->>>>>>> 5df01b0968bf3980244e938791a51515680516a7
         </div>
         <button
           onClick={() => navigate("/place-order")}

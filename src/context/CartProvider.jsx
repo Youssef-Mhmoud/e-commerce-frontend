@@ -9,7 +9,7 @@ const CartContextProvider = ({ children }) => {
 
   const [cartItems, setCartItems] = useState({});
 
-  const addToCart = (productId, size) => {
+  const addToCart = useCallback((productId, size) => {
     if (!productId) return;
 
     if (!size) {
@@ -30,7 +30,7 @@ const CartContextProvider = ({ children }) => {
 
       return newCart;
     });
-  };
+  }, []);
 
   const getCartCount = useCallback(() => {
     let total = 0;
@@ -63,28 +63,26 @@ const CartContextProvider = ({ children }) => {
     return total;
   }, [cartItems]);
 
-  const updateQuantity = (productId, size, newQuantity) => {
+  const updateQuantity = useCallback((productId, size, newQuantity) => {
     setCartItems((prevCart) => {
       const cartData = { ...prevCart };
 
       cartData[productId][size].quantity = newQuantity;
       return cartData;
     });
-  };
+  }, []);
 
-  const removeSizeCart = (productId, size, quantity) => {
+  const removeSizeCart = useCallback((productId, size, quantity) => {
     if (quantity === 0) {
       setCartItems((prevCart) => {
         if (!prevCart[productId] || !prevCart[productId][size]) {
           return prevCart;
         }
 
-        // eslint-disable-next-line no-unused-vars
-        const { [size]: removedSize, ...updateSize } = prevCart[productId];
+        const { [size]: _, ...updateSize } = prevCart[productId];
 
         if (Object.keys(updateSize).length === 0) {
-          // eslint-disable-next-line no-unused-vars
-          const { [productId]: removedProduct, ...newCart } = prevCart;
+          const { [productId]: _, ...newCart } = prevCart;
           return newCart;
         }
         return {
@@ -93,15 +91,15 @@ const CartContextProvider = ({ children }) => {
         };
       });
     }
-  };
+  }, []);
 
-  const removeProductCart = (productId) => {
+  const removeProductCart = useCallback((productId) => {
     setCartItems((prevCart) => {
       // eslint-disable-next-line no-unused-vars
       const { [productId]: removed, ...updateCart } = prevCart;
       return updateCart;
     });
-  };
+  }, []);
 
   const value = useMemo(
     () => ({
@@ -116,7 +114,15 @@ const CartContextProvider = ({ children }) => {
       removeProductCart,
       removeSizeCart,
     }),
-    [cartItems, getCartCount]
+    [
+      cartItems,
+      getCartCount,
+      getTotalAmount,
+      addToCart,
+      updateQuantity,
+      removeProductCart,
+      removeSizeCart,
+    ]
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
