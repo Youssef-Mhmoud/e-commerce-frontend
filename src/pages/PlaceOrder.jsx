@@ -1,12 +1,17 @@
+import { useState } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import CartTotal from "../components/cartComponents/CartTotal";
 import Title from "../components/Title";
+import { useNavigate } from "react-router-dom";
 
 const PlaceOrder = () => {
+  const [method, setMethod] = useState("cod");
+  const navigate = useNavigate();
+
   return (
-    <form className="flex flex-col sm:flex-row justify-between border-t border-gray-200 gap-3">
-      <div className="w-full sm:w-1/2">
-        <div className="text-xl">
+    <form className="flex flex-col sm:flex-row justify-between border-t border-gray-200 gap-4 pt-5 sm:pt-14 min-h-[80vh]">
+      <div className="w-full sm:max-w-[480pxs] text-gray-800">
+        <div className="text-xl sm:text-2xl">
           <Title titleText_1="DELIVERY" titleText_2="INFORMATION" />
         </div>
         <div className="flex gap-3">
@@ -73,24 +78,64 @@ const PlaceOrder = () => {
         />
       </div>
 
-      <div className="w-full sm:w-1/2">
+      <div className="mt-8 min-w-1/2">
         <div>
           <CartTotal showButton={false} />
         </div>
         <div>
-          <Title titleText_1="PAYMENT" titleText_2="METHOD" />
-          <div className="flex flex-col lg:flex-row justify-between gap-5">
-            <div className="flex border border-gray-300 gap-8 p-3">
-              <input type="checkbox" />
+          <div className="mb-[-30px]">
+            <Title titleText_1="PAYMENT" titleText_2="METHOD" />
+          </div>
+          <div className="flex flex-col justify-between gap-3">
+            <div
+              onClick={() => setMethod("stripe")}
+              className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
+            >
+              <p
+                className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
+                  method === "stripe" ? "bg-green-400" : ""
+                }`}
+              ></p>
               <img
-                className="w-12"
+                className="h-5 mx-4"
                 src={assets.stripe_logo}
                 alt="Stripe payment method"
               />
             </div>
+            <div
+              onClick={() => setMethod("razorpay")}
+              className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
+            >
+              <p
+                className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
+                  method === "razorpay" ? "bg-green-400" : ""
+                }`}
+              ></p>
+              <img
+                className="h-5 mx-4"
+                src={assets.razorpay_logo}
+                alt="Stripe payment method"
+              />
+            </div>
+            <div
+              onClick={() => setMethod("cod")}
+              className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
+            >
+              <p
+                className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
+                  method === "cod" ? "bg-green-400" : ""
+                }`}
+              ></p>
+              <p className="text-gray-500 text-sm font-medium mx-4">
+                CASH ON DELIVERY
+              </p>
+            </div>
           </div>
         </div>
-        <button className="bg-black text-white text-sm py-3 px-16 block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300">
+        <button
+          onClick={() => navigate("/orders")}
+          className="bg-black text-white text-sm py-3 px-16 block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300"
+        >
           PLACE ORDER
         </button>
       </div>
