@@ -111,6 +111,7 @@ const CartContextProvider = ({ children }) => {
 
       orderItems.push({
         id: product._id,
+        image: product.image,
         title: product.name,
         price: product.price,
         sizes,
