@@ -95,11 +95,31 @@ const CartContextProvider = ({ children }) => {
 
   const removeProductCart = useCallback((productId) => {
     setCartItems((prevCart) => {
-      // eslint-disable-next-line no-unused-vars
-      const { [productId]: removed, ...updateCart } = prevCart;
+      const { [productId]: _, ...updateCart } = prevCart;
       return updateCart;
     });
   }, []);
+
+  const getOrderProducts = useCallback(() => {
+    const orderItems = [];
+
+    for (const productId in cartItems) {
+      const product = products.find((product) => product._id === productId);
+      if (!product) continue;
+
+      const sizes = cartItems[productId];
+
+      orderItems.push({
+        id: product._id,
+        title: product.name,
+        price: product.price,
+        sizes,
+      });
+    }
+    return orderItems;
+  }, [cartItems]);
+
+  getOrderProducts();
 
   const value = useMemo(
     () => ({
@@ -113,6 +133,7 @@ const CartContextProvider = ({ children }) => {
       updateQuantity,
       removeProductCart,
       removeSizeCart,
+      getOrderProducts,
     }),
     [
       cartItems,
@@ -122,6 +143,7 @@ const CartContextProvider = ({ children }) => {
       updateQuantity,
       removeProductCart,
       removeSizeCart,
+      getOrderProducts,
     ]
   );
 

@@ -3,10 +3,8 @@ import Title from "../components/Title";
 import { CartContext } from "../context/ShopContext";
 
 const Orders = () => {
-  const { products, cartItems, currency } = useContext(CartContext);
-
-  console.log(cartItems);
-
+  const { getOrderProducts, currency } = useContext(CartContext);
+  console.log(getOrderProducts());
   return (
     <div className="border-t border-t-gray-200 pt-7">
       <div className="text-2xl mb-[-30px]">
@@ -14,7 +12,7 @@ const Orders = () => {
       </div>
       <div className="border-b border-t border-gray-200 py-4 text-gray-700 ">
         <div className="flex gap-4">
-          <img className="w-20 sm:w-24" src={products[1].image} alt="" />
+          <img className="w-20 sm:w-24" src={""} alt="" />
           <div>
             <p className="sm:text-base font-medium">Name</p>
             <div className="flex gap-1">

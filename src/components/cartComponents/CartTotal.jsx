@@ -16,14 +16,14 @@ const CartTotal = ({ showButton = true }) => {
         <p>Subtotal</p>
         <p>
           {currency}
-          {getTotalAmount()}
+          {getTotalAmount()}.00
         </p>
       </div>
       <div className="flex justify-between border-b border-gray-200 py-2 text-sm">
         <p>Shipping Fee</p>
         <p>
           {currency}
-          {delivery_fee}
+          {delivery_fee}.00
         </p>
       </div>
 
@@ -31,7 +31,7 @@ const CartTotal = ({ showButton = true }) => {
         <p>Total</p>
         <p>
           {currency}
-          {getTotalAmount() + delivery_fee}
+          {getTotalAmount() + delivery_fee}.00
         </p>
       </div>
       {showButton && (
