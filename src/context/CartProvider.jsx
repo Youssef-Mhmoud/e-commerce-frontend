@@ -8,6 +8,7 @@ const CartContextProvider = ({ children }) => {
   const currency = "$";
 
   const [cartItems, setCartItems] = useState({});
+  const [orders, setOrders] = useState([]);
 
   const addToCart = useCallback((productId, size) => {
     if (!productId) return;
@@ -100,8 +101,9 @@ const CartContextProvider = ({ children }) => {
     });
   }, []);
 
-  const getOrderProducts = useCallback(() => {
-    const orderItems = [];
+  const addToOrders = useCallback(() => {
+    const newOrders = [];
+    const productIdsToRemove = [];
 
     for (const productId in cartItems) {
       const product = products.find((product) => product._id === productId);
@@ -109,18 +111,21 @@ const CartContextProvider = ({ children }) => {
 
       const sizes = cartItems[productId];
 
-      orderItems.push({
+      // Adding a product in order page
+      newOrders.push({
         id: product._id,
         image: product.image,
         title: product.name,
         price: product.price,
         sizes,
       });
-    }
-    return orderItems;
-  }, [cartItems]);
 
-  getOrderProducts();
+      productIdsToRemove.push(productId);
+    }
+
+    setOrders((prevOrders) => [...prevOrders, ...newOrders]);
+    productIdsToRemove.map((id) => removeProductCart(id));
+  }, [cartItems, removeProductCart]);
 
   const value = useMemo(
     () => ({
@@ -134,7 +139,8 @@ const CartContextProvider = ({ children }) => {
       updateQuantity,
       removeProductCart,
       removeSizeCart,
-      getOrderProducts,
+      orders,
+      addToOrders,
     }),
     [
       cartItems,
@@ -144,7 +150,8 @@ const CartContextProvider = ({ children }) => {
       updateQuantity,
       removeProductCart,
       removeSizeCart,
-      getOrderProducts,
+      orders,
+      addToOrders,
     ]
   );
 

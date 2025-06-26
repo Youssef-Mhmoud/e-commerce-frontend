@@ -3,15 +3,18 @@ import Title from "../components/Title";
 import { CartContext } from "../context/ShopContext";
 
 const Orders = () => {
-  const { getOrderProducts, currency } = useContext(CartContext);
+  const { orders, currency } = useContext(CartContext);
 
   return (
     <div className="border-t border-t-gray-200 pt-7">
       <div className="text-2xl mb-[-30px]">
         <Title titleText_1="MY" titleText_2="ORDERS" />
       </div>
-      {getOrderProducts().map((product) => (
-        <div className="border-b border-t border-gray-200 py-4 text-gray-700 ">
+      {orders.map((product) => (
+        <div
+          key={product.id}
+          className="border-b border-t border-gray-200 py-4 text-gray-700 "
+        >
           <div className="flex items-start gap-4">
             <img className="w-20 sm:w-24" src={product.image[0]} alt="" />
             <div>

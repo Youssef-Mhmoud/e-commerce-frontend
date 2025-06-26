@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import CartTotal from "../components/cartComponents/CartTotal";
 import Title from "../components/Title";
 import { useNavigate } from "react-router-dom";
+import { CartContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
+  const { addToOrders } = useContext(CartContext);
   const [method, setMethod] = useState("cod");
   const navigate = useNavigate();
 
@@ -133,7 +135,10 @@ const PlaceOrder = () => {
           </div>
         </div>
         <button
-          onClick={() => navigate("/orders")}
+          onClick={() => {
+            navigate("/orders");
+            addToOrders();
+          }}
           className="bg-black text-white text-sm py-3 px-16 block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300"
         >
           PLACE ORDER
