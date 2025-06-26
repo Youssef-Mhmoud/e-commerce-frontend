@@ -3,16 +3,16 @@ import Title from "../components/Title";
 import { CartContext } from "../context/ShopContext";
 
 const Orders = () => {
-  const { orders, currency } = useContext(CartContext);
+  const { orders, currency, payment } = useContext(CartContext);
 
   return (
     <div className="border-t border-t-gray-200 pt-7">
       <div className="text-2xl mb-[-30px]">
         <Title titleText_1="MY" titleText_2="ORDERS" />
       </div>
-      {orders.map((product) => (
+      {orders.map((product, i) => (
         <div
-          key={product.id}
+          key={`${product.id}${i}`}
           className="border-b border-t border-gray-200 py-4 text-gray-700 "
         >
           <div className="flex items-start gap-4">
@@ -28,14 +28,15 @@ const Orders = () => {
               </div>
               <div className="flex gap-1">
                 <p>Date: </p>
-                <p className="text-gray-400">Tue Jun 24 2025</p>
+
+                <p className="text-gray-400">{product.date}</p>
               </div>
               <div className="flex gap-1">
                 <p>Payment: </p>
-                <p className="text-gray-400"> COD</p>
+                <p className="text-gray-400"> {payment}</p>
               </div>
-              {Object.entries(product.sizes).map(([size, { quantity }]) => (
-                <div className="flex gap-3">
+              {Object.entries(product.sizes).map(([size, { quantity }], i) => (
+                <div key={`${product.id}${i}`} className="flex gap-3">
                   <div className="flex gap-1">
                     <p>Size: </p>
                     <p>{size}</p>

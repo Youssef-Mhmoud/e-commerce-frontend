@@ -10,7 +10,11 @@ const Layout = ({ children }) => {
 
   return (
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw]">
-      <ToastContainer  style={{ top: "25px", }} closeOnClick autoClose={3000} />
+      <ToastContainer
+        // style={{ top: "25px" }}
+        closeOnClick
+        autoClose={3000}
+      />
       <Navbar />
       {showSearch && <SearchBar />}
       {children}

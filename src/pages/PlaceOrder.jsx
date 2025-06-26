@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { assets } from "../assets/frontend_assets/assets";
 import CartTotal from "../components/cartComponents/CartTotal";
 import Title from "../components/Title";
@@ -6,10 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { CartContext } from "../context/ShopContext";
 
 const PlaceOrder = () => {
-  const { addToOrders } = useContext(CartContext);
-  const [method, setMethod] = useState("cod");
-  const navigate = useNavigate();
+  const { addToOrders, setPayment, payment } = useContext(CartContext);
 
+  const navigate = useNavigate();
   return (
     <form className="flex flex-col sm:flex-row justify-between border-t border-gray-200 gap-4 pt-5 sm:pt-14 min-h-[80vh]">
       <div className="w-full sm:max-w-[480pxs] text-gray-800">
@@ -90,12 +89,12 @@ const PlaceOrder = () => {
           </div>
           <div className="flex flex-col justify-between gap-3">
             <div
-              onClick={() => setMethod("stripe")}
+              onClick={() => setPayment("STRIPE")}
               className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
             >
               <p
                 className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
-                  method === "stripe" ? "bg-green-400" : ""
+                  payment === "STRIPE" ? "bg-green-400" : ""
                 }`}
               ></p>
               <img
@@ -105,12 +104,12 @@ const PlaceOrder = () => {
               />
             </div>
             <div
-              onClick={() => setMethod("razorpay")}
+              onClick={() => setPayment("RAZORPAY")}
               className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
             >
               <p
                 className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
-                  method === "razorpay" ? "bg-green-400" : ""
+                  payment === "RAZORPAY" ? "bg-green-400" : ""
                 }`}
               ></p>
               <img
@@ -120,12 +119,12 @@ const PlaceOrder = () => {
               />
             </div>
             <div
-              onClick={() => setMethod("cod")}
+              onClick={() => setPayment("COD")}
               className="flex items-center border border-gray-200 gap-3 p-2 px-3 cursor-pointer hover:bg-gray-50 duration-200"
             >
               <p
                 className={`w-3.5 h-3.5 rounded-full border border-gray-200 ${
-                  method === "cod" ? "bg-green-400" : ""
+                  payment === "COD" ? "bg-green-400" : ""
                 }`}
               ></p>
               <p className="text-gray-500 text-sm font-medium mx-4">
