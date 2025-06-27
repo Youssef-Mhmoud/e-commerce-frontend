@@ -134,9 +134,10 @@ const PlaceOrder = () => {
           </div>
         </div>
         <button
-          onClick={() => {
+          onClick={(e) => {
+            e.preventDefault();
             navigate("/orders");
-            addToOrders();
+            addToOrders(payment);
           }}
           className="bg-black text-white text-sm py-3 px-16 block ml-auto mt-5 cursor-pointer hover:opacity-80 duration-300"
         >

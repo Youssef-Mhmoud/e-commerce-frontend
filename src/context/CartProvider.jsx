@@ -71,6 +71,10 @@ const CartContextProvider = ({ children }) => {
 
   const updateQuantity = useCallback((productId, size, newQuantity) => {
     setCartItems((prevCart) => {
+      if (!prevCart[productId] || !prevCart[productId][size]) {
+        return prevCart;
+      }
+
       const cartData = { ...prevCart };
 
       cartData[productId][size].quantity = newQuantity;
@@ -106,40 +110,43 @@ const CartContextProvider = ({ children }) => {
     });
   }, []);
 
-  const addToOrders = useCallback(() => {
-    const newOrders = [];
-    const productIdsToRemove = [];
-    let totalPrice = 0;
+  const addToOrders = useCallback(
+    (paymentMethod) => {
+      const newOrders = [];
+      const productIdsToRemove = [];
 
-    for (const productId in cartItems) {
-      const product = products.find((product) => product._id === productId);
-      if (!product) continue;
+      for (const productId in cartItems) {
+        const product = products.find((product) => product._id === productId);
+        if (!product) continue;
 
-      const price = product.price;
-      const sizes = cartItems[productId];
+        const price = product.price;
+        const sizes = cartItems[productId];
+        let totalPrice = 0;
 
-      for (const size in sizes) {
-        const { quantity } = sizes[size];
-        totalPrice += quantity * price;
+        for (const size in sizes) {
+          const { quantity } = sizes[size];
+          totalPrice += quantity * price;
+        }
+
+        // Adding a product in order page
+        newOrders.push({
+          id: product._id,
+          image: product.image,
+          title: product.name,
+          price: totalPrice,
+          sizes,
+          date: new Date().toDateString(),
+          payment: paymentMethod,
+        });
+
+        productIdsToRemove.push(productId);
       }
 
-      // Adding a product in order page
-      newOrders.push({
-        id: product._id,
-        image: product.image,
-        title: product.name,
-        price: totalPrice,
-        sizes,
-        date: new Date().toDateString(),
-        payment: payment,
-      });
-
-      productIdsToRemove.push(productId);
-    }
-
-    setOrders((prevOrders) => [...prevOrders, ...newOrders]);
-    productIdsToRemove.map((id) => removeProductCart(id));
-  }, [cartItems, removeProductCart]);
+      setOrders((prevOrders) => [...prevOrders, ...newOrders]);
+      productIdsToRemove.map((id) => removeProductCart(id));
+    },
+    [cartItems, removeProductCart]
+  );
 
   const value = useMemo(
     () => ({
