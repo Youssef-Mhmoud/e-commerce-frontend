@@ -16,7 +16,11 @@ const ProfileIcon = () => {
           <p className="hover:text-black cursor-pointer duration-300">
             My Profile
           </p>
-          <p className="hover:text-black cursor-pointer duration-300">Orders</p>
+          <Link to="/orders">
+            <p className="hover:text-black cursor-pointer duration-300">
+              Orders
+            </p>
+          </Link>
           <p className="hover:text-black cursor-pointer duration-300">Logout</p>
         </div>
       </div>
